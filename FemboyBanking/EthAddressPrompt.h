@@ -180,6 +180,7 @@ namespace FemboyBanking {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"EthAddressPrompt";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Connect Ethereum Wallet";
 			this->ResumeLayout(false);
 			this->PerformLayout();
