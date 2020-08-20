@@ -54,6 +54,7 @@ namespace FemboyBanking {
 		System::Windows::Forms::Label^  label2;
 		System::ComponentModel::BackgroundWorker^  etherscanWorker;
 		System::Windows::Forms::ProgressBar^  progressBar;
+	private: System::Windows::Forms::Label^  label3;
 
 
 	private:
@@ -78,6 +79,7 @@ namespace FemboyBanking {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->etherscanWorker = (gcnew System::ComponentModel::BackgroundWorker());
 			this->progressBar = (gcnew System::Windows::Forms::ProgressBar());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// doneBtn
@@ -152,11 +154,21 @@ namespace FemboyBanking {
 			this->progressBar->TabIndex = 6;
 			this->progressBar->UseWaitCursor = true;
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(9, 133);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(243, 13);
+			this->label3->TabIndex = 7;
+			this->label3->Text = L"Connecting to the Femboy Network... Please wait.";
+			// 
 			// EthAddressPrompt
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(322, 103);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->progressBar);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -168,7 +180,7 @@ namespace FemboyBanking {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"EthAddressPrompt";
-			this->Text = L"Enter LINK Address";
+			this->Text = L"Connect Ethereum Wallet";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -190,7 +202,7 @@ namespace FemboyBanking {
 		}
 		System::Void doneBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 			this->ethTextBox->Enabled = false;
-			this->Height += 40;
+			this->Height += 50;
 			etherscanWorker->RunWorkerAsync( this->ethTextBox->Text );
 		}
 		System::Void etherscanWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
@@ -208,15 +220,14 @@ namespace FemboyBanking {
 			{
 				Double balance = (UInt64) e->Result / 1e18;
 				String^ balanceMsg = String::Format("You have {0} LINK", balance);
-				MessageBox::Show(this, balanceMsg, "Wallet Balance Retrieved", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				
+
 				Main^ form = gcnew Main(this->ethTextBox->Text, balance);
 				this->Owner = form;
 				this->Owner->Show();
 				this->Hide();
 			}
 			this->ethTextBox->Enabled = true;
-			this->Height -= 40;
+			this->Height -= 50;
 		}
 		System::Void etherscanWorker_ProgressChanged(System::Object^  sender, System::ComponentModel::ProgressChangedEventArgs^  e) {
 			this->progressBar->Value = e->ProgressPercentage;
