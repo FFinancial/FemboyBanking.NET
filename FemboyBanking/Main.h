@@ -86,11 +86,11 @@ namespace FemboyBanking {
 			this->balLbl->AutoSize = true;
 			this->balLbl->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
-			this->balLbl->Location = System::Drawing::Point(175, 49);
+			this->balLbl->Location = System::Drawing::Point(36, 40);
 			this->balLbl->Name = L"balLbl";
-			this->balLbl->Size = System::Drawing::Size(81, 13);
+			this->balLbl->Size = System::Drawing::Size(110, 13);
 			this->balLbl->TabIndex = 1;
-			this->balLbl->Text = L"BALANCE $0";
+			this->balLbl->Text = L"BALANCE: 0 LINK";
 			// 
 			// depBtn
 			// 

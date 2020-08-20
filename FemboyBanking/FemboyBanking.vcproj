@@ -22,7 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
-			ManagedExtensions="2"
+			ManagedExtensions="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,6 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)thirdparty\rapidjson-1.1.0\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
@@ -59,8 +60,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="$(NOINHERIT)"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				SubSystem="2"
@@ -200,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Etherscan.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FemboyBanking.cpp"
 				>
 			</File>
@@ -229,6 +235,19 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\EthAddressPrompt.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\EthAddressPrompt.resx"
+					>
+				</File>
+			</File>
+			<File
+				RelativePath=".\Etherscan.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Main.h"
 				FileType="3"

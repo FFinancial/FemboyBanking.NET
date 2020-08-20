@@ -1,7 +1,7 @@
 // FemboyBanking.cpp : main project file.
 
 #include "stdafx.h"
-#include "Main.h"
+#include "EthAddressPrompt.h"
 
 using namespace FemboyBanking;
 
@@ -13,6 +13,6 @@ int main(array<System::String ^> ^args)
 	Application::SetCompatibleTextRenderingDefault(false); 
 
 	// Create the main window and run it
-	Application::Run(gcnew Main());
+	Application::Run(gcnew EthAddressPrompt());
 	return 0;
 }
