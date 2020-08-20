@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace FemboyBanking {
 
 	using namespace System;
@@ -22,12 +21,14 @@ namespace FemboyBanking {
 	public ref class Main : public System::Windows::Forms::Form
 	{
 	public:
-		Main(void)
+		Main(String^ ethAddress, Double linkBalance)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			this->ethAddress = ethAddress;
+			this->linkBalance = linkBalance;
 		}
 
 	protected:
@@ -47,10 +48,9 @@ namespace FemboyBanking {
 	private: System::Windows::Forms::Button^  withBtn;
 	private: System::Windows::Forms::Button^  logBtn;
 
-
-
-
-	protected: 
+	private:
+		double linkBalance;
+		String^ ethAddress;
 
 	private:
 		/// <summary>
@@ -89,9 +89,9 @@ namespace FemboyBanking {
 				static_cast<System::Byte>(0)));
 			this->balLbl->Location = System::Drawing::Point(36, 40);
 			this->balLbl->Name = L"balLbl";
-			this->balLbl->Size = System::Drawing::Size(110, 13);
+			this->balLbl->Size = System::Drawing::Size(67, 13);
 			this->balLbl->TabIndex = 1;
-			this->balLbl->Text = L"BALANCE: 0 LINK";
+			this->balLbl->Text = L"BALANCE:";
 			// 
 			// depBtn
 			// 
@@ -138,6 +138,7 @@ namespace FemboyBanking {
 			this->MaximizeBox = false;
 			this->Name = L"Main";
 			this->Text = L"FemboyBanking";
+			this->Load += gcnew System::EventHandler(this, &Main::Main_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -146,11 +147,14 @@ namespace FemboyBanking {
 	private: System::Void depBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 				 MessageBox::Show( this, "You selected DEPOSIT", "FemboyBanking Alert", MessageBoxButtons::OK, MessageBoxIcon::Information );
 			 }
-private: System::Void withBtn_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void withBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 				 MessageBox::Show( this, "You selected WITHDRAW", "FemboyBanking Alert", MessageBoxButtons::OK, MessageBoxIcon::Information );
 			 }
-private: System::Void logBtn_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void logBtn_Click(System::Object^  sender, System::EventArgs^  e) {
 				 MessageBox::Show( this, "You selected TRANSACTION LOG", "FemboyBanking Alert", MessageBoxButtons::OK, MessageBoxIcon::Information );
+			 }
+	private: System::Void Main_Load(System::Object^  sender, System::EventArgs^  e) {
+				 this->balLbl->Text = String::Format("BALANCE: {0} LINK", this->linkBalance);
 			 }
 };
 }

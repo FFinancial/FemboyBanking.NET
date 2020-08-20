@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include "Etherscan.h"
+#include "Main.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -145,9 +146,9 @@ namespace FemboyBanking {
 			// 
 			// progressBar
 			// 
-			this->progressBar->Location = System::Drawing::Point(12, 106);
+			this->progressBar->Location = System::Drawing::Point(12, 112);
 			this->progressBar->Name = L"progressBar";
-			this->progressBar->Size = System::Drawing::Size(298, 23);
+			this->progressBar->Size = System::Drawing::Size(298, 18);
 			this->progressBar->TabIndex = 6;
 			this->progressBar->UseWaitCursor = true;
 			// 
@@ -155,7 +156,7 @@ namespace FemboyBanking {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(322, 105);
+			this->ClientSize = System::Drawing::Size(322, 103);
 			this->Controls->Add(this->progressBar);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -185,9 +186,11 @@ namespace FemboyBanking {
 			this->ethTextBox->UseSystemPasswordChar = this->privacyCheckBox->Checked;
 		}
 		System::Void cancelBtn_Click(System::Object^  sender, System::EventArgs^  e) {
-			this->Close();
+			Application::Exit();
 		}
 		System::Void doneBtn_Click(System::Object^  sender, System::EventArgs^  e) {
+			this->ethTextBox->Enabled = false;
+			this->Height += 40;
 			etherscanWorker->RunWorkerAsync( this->ethTextBox->Text );
 		}
 		System::Void etherscanWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
@@ -206,10 +209,17 @@ namespace FemboyBanking {
 				Double balance = (UInt64) e->Result / 1e18;
 				String^ balanceMsg = String::Format("You have {0} LINK", balance);
 				MessageBox::Show(this, balanceMsg, "Wallet Balance Retrieved", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				
+				Main^ form = gcnew Main(this->ethTextBox->Text, balance);
+				this->Owner = form;
+				this->Owner->Show();
+				this->Hide();
 			}
+			this->ethTextBox->Enabled = true;
+			this->Height -= 40;
 		}
 		System::Void etherscanWorker_ProgressChanged(System::Object^  sender, System::ComponentModel::ProgressChangedEventArgs^  e) {
-			// this->progressBar->Value = e->progressPercentage;
+			this->progressBar->Value = e->ProgressPercentage;
 		}
 	};
 }
