@@ -45,14 +45,27 @@ UInt64 Etherscan::FetchLinkBalance(String^ address, BackgroundWorker^ worker, Do
 	response.Parse(DataReceived);
 	worker->ReportProgress(90);
 
-	if (response.HasMember("error"))
+	if (strcmp(response["status"].GetString(), "1") != 0)
 	{
+		if (response.HasMember("result"))
+		{
+			const char* error = response["result"].GetString();
+			MessageBox::Show( dynamic_cast<Form^>(worker->Container), gcnew String(error), "API Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		else
+		{
+			MessageBox::Show( dynamic_cast<Form^>(worker->Container), "Unknown error", "API Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 		return -1;
 	}
 
 	InternetCloseHandle(OpenAddress);
 	InternetCloseHandle(connect);
+
+	const char* result = response["result"].GetString();
+	String^ balanceStr = gcnew String(result);
+	UInt64 balance = UInt64::Parse(balanceStr);
+
 	worker->ReportProgress(100);
-	String^ balance = gcnew String(response["result"].GetString());
-	return UInt64::Parse(balance);
+	return balance;
 }

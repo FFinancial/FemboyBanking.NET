@@ -68,6 +68,7 @@ namespace FemboyBanking {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(EthAddressPrompt::typeid));
 			this->doneBtn = (gcnew System::Windows::Forms::Button());
 			this->cancelBtn = (gcnew System::Windows::Forms::Button());
 			this->ethTextBox = (gcnew System::Windows::Forms::TextBox());
@@ -102,7 +103,7 @@ namespace FemboyBanking {
 			// 
 			this->ethTextBox->AllowDrop = true;
 			this->ethTextBox->Location = System::Drawing::Point(12, 42);
-			this->ethTextBox->MaxLength = 66;
+			this->ethTextBox->MaxLength = 42;
 			this->ethTextBox->Name = L"ethTextBox";
 			this->ethTextBox->Size = System::Drawing::Size(298, 20);
 			this->ethTextBox->TabIndex = 2;
@@ -163,13 +164,13 @@ namespace FemboyBanking {
 			this->Controls->Add(this->cancelBtn);
 			this->Controls->Add(this->doneBtn);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"EthAddressPrompt";
-			this->ShowInTaskbar = false;
 			this->Text = L"Enter LINK Address";
-			this->TopMost = true;
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private:
@@ -200,9 +201,11 @@ namespace FemboyBanking {
 			e->Result = Etherscan::FetchLinkBalance( e->Argument->ToString(), worker, e );
 		}
 		System::Void etherscanWorker_RunWorkerCompleted(System::Object^  sender, System::ComponentModel::RunWorkerCompletedEventArgs^  e) {
-			if (e->Result != -1)
-			{	
-				MessageBox::Show(this, e->Result->ToString(), "Wallet Balance Retrieved", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			if ((UInt64) e->Result != -1)
+			{
+				Double balance = (UInt64) e->Result / 1e18;
+				String^ balanceMsg = String::Format("You have {0} LINK", balance);
+				MessageBox::Show(this, balanceMsg, "Wallet Balance Retrieved", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			}
 		}
 		System::Void etherscanWorker_ProgressChanged(System::Object^  sender, System::ComponentModel::ProgressChangedEventArgs^  e) {

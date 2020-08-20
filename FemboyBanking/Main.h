@@ -65,6 +65,7 @@ namespace FemboyBanking {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(Main::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->balLbl = (gcnew System::Windows::Forms::Label());
 			this->depBtn = (gcnew System::Windows::Forms::Button());
@@ -133,6 +134,7 @@ namespace FemboyBanking {
 			this->Controls->Add(this->balLbl);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->Name = L"Main";
 			this->Text = L"FemboyBanking";
